@@ -1,0 +1,17 @@
+@import url("../../app.scss");
+
+.indicina__button {
+  padding: 0.5rem 1rem;
+  //width: 5rem;
+  line-height: 21px;
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  color: var(--white);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
