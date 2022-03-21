@@ -1,15 +1,23 @@
 import ApiService from "../apiService/ApiService";
 
 const UserService = {
-  getAllRepositories: (limit = 50, page = 1) => {
+  getAllUsers: () => {
     return new Promise(function (resolve, reject) {
-      ApiService.get(
-        `admin/get_all_coupon_codes?per_page=${limit}&page=${page}`
-      )
-        .then((res) => {
-          if (res.status !== 200) {
-            return reject(res.data);
+      const query = `search(type: USER, query: "he", first: 30) {
+        edges {
+          node {
+            ... on User {
+              id
+              email
+              bio
+              name
+              updatedAt
+            }
           }
+        }
+      }`;
+      ApiService.post("", { query })
+        .then((res) => {
           resolve(res.data);
         })
         .catch((error) => {
@@ -19,12 +27,22 @@ const UserService = {
   },
 
   search: (term: string) => {
-    return new Promise(function (resolve, reject) {
-      ApiService.get(`admin/get_all_coupon_codes?search_string=${term}`)
-        .then((res) => {
-          if (res.status !== 200) {
-            return reject(res.data);
+    const query = `search(type: USER, query: ${term}, first: 30) {
+      edges {
+        node {
+          ... on User {
+            id
+            email
+            bio
+            name
+            updatedAt
           }
+        }
+      }
+    }`;
+    return new Promise(function (resolve, reject) {
+      ApiService.post("", { query })
+        .then((res) => {
           resolve(res.data);
         })
         .catch((error) => {

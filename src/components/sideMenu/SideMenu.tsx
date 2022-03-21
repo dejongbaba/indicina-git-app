@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import "./sideMenu.scss";
-type SideMenuProp = {
-  children: ReactNode;
-};
+
 export default function SideMenu() {
   return (
     <nav className="side__menu">

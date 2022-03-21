@@ -1,4 +1,3 @@
-import axios from "axios";
 import ApiService from "../apiService/ApiService";
 
 export interface ResponseModel {

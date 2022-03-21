@@ -4,9 +4,26 @@ import ApiService from "../apiService/ApiService";
 ApiService.init(process.env.REACT_APP_GRAPH_QL_URI ?? "");
 ApiService.setHeader(getToken() ?? "");
 const RepoService = {
-  getAllRepositories: (limit = 50, page = 1) => {
+  getAllRepositories: () => {
+    const query = `search(type: REPOSITORY, first: 30, query: "") {
+        edges {
+          node {
+            ... on Repository {
+              id
+              owner {
+                id
+                avatarUrl
+              }
+              name
+              updatedAt
+              description
+              stargazerCount
+            }
+          }
+        }
+      }`;
     return new Promise(function (resolve, reject) {
-      ApiService.get(``)
+      ApiService.post("", { query })
         .then((res) => {
           resolve(res.data);
         })
@@ -16,8 +33,25 @@ const RepoService = {
     });
   },
   search: (term: string) => {
+    const query = `search(type: REPOSITORY, first: 30, query: ${term}) {
+        edges {
+          node {
+            ... on Repository {
+              id
+              owner {
+                id
+                avatarUrl
+              }
+              name
+              updatedAt
+              description
+              stargazerCount
+            }
+          }
+        }
+      }`;
     return new Promise(function (resolve, reject) {
-      ApiService.get(`?search_string=${term}`)
+      ApiService.post("", { query })
         .then((res) => {
           if (res.status !== 200) {
             return reject(res.data);
