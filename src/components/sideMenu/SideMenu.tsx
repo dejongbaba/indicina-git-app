@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import "./sideMenu.scss";
 
 export default function SideMenu() {
@@ -6,12 +5,12 @@ export default function SideMenu() {
     <nav className="side__menu">
       <ul>
         <li className="side__menu__item">
-          <a href="#">User</a>
-          <a href="#">12003</a>
+          <span>User</span>
+          <span>12003</span>
         </li>
         <li className="side__menu__item">
-          <a href="#">Repositories</a>
-          <a href="#">34000</a>
+          <span>Repositories</span>
+          <span>34000</span>
         </li>
       </ul>
     </nav>

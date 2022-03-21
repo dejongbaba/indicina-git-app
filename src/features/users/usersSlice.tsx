@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Dispatch } from "react";
-import { DispatchProp } from "react-redux";
 import UserService from "../../services/userService/UserService";
 
 export interface CounterState {

@@ -21,10 +21,10 @@ function NavigationBar({ onSearch }: NagivationProps) {
         suffix={<SearchOutlined />}
       />
       <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-          <img src={userImage} alt="user placeholder image" /> John Doe{" "}
+        <span className="ant-dropdown-link">
+          <img src={userImage} alt="profile placeholder" /> John Doe{" "}
           <DownOutlined />
-        </a>
+        </span>
       </Dropdown>
     </div>
   );

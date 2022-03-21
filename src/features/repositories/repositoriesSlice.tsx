@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import RepoService from "../../services/repoService/RepoService";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface CounterState {
   repositories: Array<any>;
