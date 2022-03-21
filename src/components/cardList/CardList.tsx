@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import "./cardList.scss";
 
 type CardListProps = {
@@ -15,12 +15,18 @@ function CardList(props: CardListProps) {
   return (
     <div className="card__list">
       <h4 className="card__list__title">{title}</h4>
-      {data?.length ? data?.map((d) => view(d)) : <div> No Data Yet</div>}
-      <Pagination
-        className="card__list__pagination"
-        current={currentPage}
-        total={totalPages}
-      />
+      {data?.length ? (
+        data?.map((d) => view(d))
+      ) : (
+        <Empty description="No Repositories" />
+      )}
+      <div className="card__list__pagination__section">
+        <Pagination
+          className="card__list__pagination"
+          current={currentPage}
+          total={totalPages}
+        />
+      </div>
     </div>
   );
 }

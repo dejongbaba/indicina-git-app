@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import repositories from "../reducers/repositories/repositories";
-import user from "../reducers/user/user";
-import users from "../reducers/users/users";
+import repositories from "../features/repositories/repositoriesSlice";
+import user from "../features/user/userSlice";
+import users from "../features/users/usersSlice";
 
 // const preloadedState = {
 //   repositories: [],

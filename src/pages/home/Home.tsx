@@ -39,10 +39,10 @@ function Home(props: HomeProps) {
     console.log("data", data);
     return (
       <Card
-        title="Getting to ist yeah"
-        type="repo"
-        description="hsdhs"
-        header="Hellos"
+        title={data?.title}
+        type={"repo"}
+        description={data?.description}
+        header={data?.data}
       />
     );
   };
@@ -51,6 +51,33 @@ function Home(props: HomeProps) {
     setSearch(e.target.value);
   };
 
+  const Repos = [
+    {
+      title: "HEllo this is the Repo",
+      description: "this is the rpos you are talking about to theb",
+      header: "What Are you asyin",
+    },
+    {
+      title: "HEllo this is the Repo",
+      description: "this is the rpos you are talking about to theb",
+      header: "What Are you asyin",
+    },
+    {
+      title: "HEllo this is the Repo",
+      description: "this is the rpos you are talking about to theb",
+      header: "What Are you asyin",
+    },
+    {
+      title: "HEllo this is the Repo",
+      description: "this is the rpos you are talking about to theb",
+      header: "What Are you asyin",
+    },
+    {
+      title: "HEllo this is the Repo",
+      description: "this is the rpos you are talking about to theb",
+      header: "What Are you asyin",
+    },
+  ];
   return (
     <div>
       <NavigationBar onSearch={onSearch} />
@@ -60,7 +87,7 @@ function Home(props: HomeProps) {
           currentPage={1}
           totalPages={39}
           view={cardFormat}
-          data={[]}
+          data={Repos}
           title="View Repositories"
         />
       </ListSection>

@@ -1,6 +1,10 @@
 .card__list {
   &__title {
+    font-size: 1.5rem;
   }
   &__pagination {
+  }
+  &__pagination__section {
+    text-align: right;
   }
 }
