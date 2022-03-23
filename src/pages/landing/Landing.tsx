@@ -18,14 +18,14 @@ function Landing() {
       });
   };
   const onFailure = (response: { [key: string]: any }) =>
-    console.error(response);
+    console.error("error", response);
 
   return (
     <div className="landing">
       <LoginGithub
         className="indicina__button"
         buttonText="Login to Github"
-        redirectUri={process.env.REACT_APP_REDIRECT_URI}
+        redirectUri=""
         clientId={process.env.REACT_APP_CLIENT_ID || ""}
         onSuccess={onSuccess}
         onFailure={onFailure}

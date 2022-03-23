@@ -8,13 +8,24 @@
     width: 200px;
   }
   &__input {
-    padding: 1rem;
-    width: 300px;
-    border: 1px solid var(--primary);
+    width: 350px;
+    border: 1px solid var(--input-gray);
+    font-size: 0.9rem;
     border-radius: 2rem;
     -webkit-border-radius: 2rem;
     -moz-border-radius: 2rem;
     -ms-border-radius: 2rem;
     -o-border-radius: 2rem;
+
+    .ant-input-suffix {
+      font-size: 1.2rem;
+      font-weight: bolder;
+    }
+  }
+  &__input:hover,
+  &__input:focus {
+    border: 1px solid var(--input-gray) !important;
+    outline: none !important;
+    box-shadow: none !important;
   }
 }

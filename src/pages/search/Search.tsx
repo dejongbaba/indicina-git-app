@@ -27,7 +27,7 @@ function Landing() {
           <Input
             onChange={onHandleSearch}
             className="page__search__input"
-            placeholder="input search text"
+            placeholder="Search"
             size="large"
             suffix={<SearchOutlined />}
           />

@@ -16,13 +16,18 @@ function NavigationBar({ onSearch }: NagivationProps) {
       <Input
         onChange={onSearch}
         className="page__search__input"
-        placeholder="input search text"
+        placeholder="Search"
         size="large"
         suffix={<SearchOutlined />}
       />
-      <Dropdown overlay={menu}>
-        <span className="ant-dropdown-link">
-          <img src={userImage} alt="profile placeholder" /> John Doe{" "}
+      <Dropdown overlay={menu} className="navigation__dropdown">
+        <span className=" ant-dropdown-link">
+          <img
+            className="navigation__dropdown__image"
+            src={userImage}
+            alt="profile placeholder"
+          />{" "}
+          <span className="navigation__dropdown__text">John Doe</span>
           <DownOutlined />
         </span>
       </Dropdown>
@@ -32,34 +37,7 @@ function NavigationBar({ onSearch }: NagivationProps) {
 
 const menu = (
   <Menu>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.antgroup.com"
-      >
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item icon={<DownOutlined />} disabled>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.aliyun.com"
-      >
-        2nd menu item (disabled)
-      </a>
-    </Menu.Item>
-    <Menu.Item disabled>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.luohanacademy.com"
-      >
-        3rd menu item (disabled)
-      </a>
-    </Menu.Item>
-    <Menu.Item danger>a danger item</Menu.Item>
+    <Menu.Item danger>Logout</Menu.Item>
   </Menu>
 );
 
