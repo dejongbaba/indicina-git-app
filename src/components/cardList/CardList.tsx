@@ -7,11 +7,12 @@ type CardListProps = {
   title: string;
   currentPage: number;
   totalPages: number;
+  paginated: boolean;
   view: (data: { [key: string]: any }) => ReactNode;
 };
 
 function CardList(props: CardListProps) {
-  const { title, data, currentPage, totalPages, view } = props;
+  const { title, data, currentPage, totalPages, paginated, view } = props;
   return (
     <div className="card__list">
       <h4 className="card__list__title">{title}</h4>
@@ -20,13 +21,15 @@ function CardList(props: CardListProps) {
       ) : (
         <Empty description="No Repositories" />
       )}
-      <div className="card__list__pagination__section">
-        <Pagination
-          className="card__list__pagination"
-          current={currentPage}
-          total={totalPages}
-        />
-      </div>
+      {data?.length && paginated ? (
+        <div className="card__list__pagination__section">
+          <Pagination
+            className="card__list__pagination"
+            current={currentPage}
+            total={totalPages}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

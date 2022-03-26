@@ -4,12 +4,6 @@ import repositories from "../features/repositories/repositoriesSlice";
 import user from "../features/user/userSlice";
 import users from "../features/users/usersSlice";
 
-// const preloadedState = {
-//   repositories: [],
-//   users: [],
-//   user: {},
-// };
-
 const reducer = {
   repositories,
   users,

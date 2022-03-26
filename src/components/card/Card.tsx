@@ -1,7 +1,6 @@
 import "./card.scss";
 
 type CardProps = {
-  title: string;
   type: string;
 };
 function Card(props: CardProps & RepoCardProps & UserCardProps) {

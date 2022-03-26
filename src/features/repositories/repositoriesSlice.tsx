@@ -1,36 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import RepoService from "../../services/repoService/RepoService";
 
-export interface CounterState {
+export interface RepoStateProps {
   repositories: Array<any>;
+  status: string;
 }
 
-const initialState: CounterState = {
+const initialState: RepoStateProps = {
   repositories: [],
+  status: "",
 };
 
-// const fetchRepositories = createAsyncThunk(
-//   "repo/fetchRepositories",
-//   async () => {
-//     const response = await RepoService.getAllRepositories();
-//     return response?.data;
-//   }
-// );
+const fetchRepositories: any = createAsyncThunk(
+  "repo/fetchRepositories",
+  async () => {
+    return RepoService.getAllRepositories();
+  }
+);
 
 export const counterSlice = createSlice({
   name: "repositories",
   initialState,
   reducers: {
     setRepositories: () => {},
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
   },
-  extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    // builder.addCase(fetchRepositories, (state, action) => {
-    //   // Add user to the state array
-    //   state.repositories.(action.payload);
-    // });
+  extraReducers: {
+    [fetchRepositories.fulfilled]: (state: any, payload: any) => {
+      state.status = "success";
+      state.repositories = payload;
+    },
+    [fetchRepositories.rejected]: (state, payload) => {
+      state.status = "failed";
+    },
+    [fetchRepositories.pending]: (state, payload) => {
+      state.status = "pending";
+    },
   },
 });
 

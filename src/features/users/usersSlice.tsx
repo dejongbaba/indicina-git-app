@@ -1,18 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import UserService from "../../services/userService/UserService";
 
-export interface CounterState {
+export interface UsersStateProps {
   users: Array<any>;
+  status: string;
 }
 
-const initialState: CounterState = {
+const initialState: UsersStateProps = {
   users: [],
+  status: "",
 };
 
-export const getUsers = createAsyncThunk(
+export const getUsers: any = createAsyncThunk(
   "users/getAllUsers",
   async (dispatch, state) => {
     return UserService.getAllUsers();
+  }
+);
+export const searchGetUsers: any = createAsyncThunk(
+  "users/searchGetAllUsers",
+  async (dispatch, state) => {
+    return UserService.search("hello");
   }
 );
 
@@ -22,11 +30,26 @@ export const userSlice = createSlice({
   reducers: {
     setUsers: () => {},
   },
-  // extraReducers: {
-  //   [getUsers.pending]: (state: any, actiona: any) => {},
-  //   [getUsers.fulfilled]: (state: any, action: any) => {},
-  //   [getUsers.rejected]: (state: any, action: any) => {},
-  // },
+  extraReducers: {
+    [getUsers.pending]: (state: any, action: any) => {
+      state.status = "pending";
+    },
+    [getUsers.fulfilled]: (state: any, action: any) => {
+      state.users = action.payload;
+    },
+    [getUsers.rejected]: (state: any, action: any) => {
+      state.status = "failed";
+    },
+    [searchGetUsers.pending]: (state: any, action: any) => {
+      state.status = "pending";
+    },
+    [searchGetUsers.fulfilled]: (state: any, action: any) => {
+      state.users = action.payload;
+    },
+    [searchGetUsers.rejected]: (state: any, action: any) => {
+      state.status = "failed";
+    },
+  },
 });
 
 export const { setUsers } = userSlice.actions;

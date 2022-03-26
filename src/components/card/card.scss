@@ -3,17 +3,28 @@
   margin-bottom: 1rem;
   padding: 1rem;
   background-color: var(--white);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.03);
+  color: var(--black);
 }
 
 .user__card {
   @extend .card;
 }
+
 .repo__card {
   @extend .card;
 
-  &__title {
+  &__header {
     color: var(--black);
     font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  &__title {
+    letter-spacing: 0.5;
+    margin-bottom: 0.8rem;
+  }
+  &__desc {
+    font-size: 0.8rem;
   }
 }

@@ -1,10 +1,61 @@
+.cardBorder {
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+}
+.softTransition {
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
 .card__list {
   &__title {
     font-size: 1.5rem;
-  }
-  &__pagination {
+    margin-bottom: 1.5rem;
   }
   &__pagination__section {
     text-align: right;
+  }
+  &__pagination {
+    .ant-pagination-prev,
+    .ant-pagination-jump-prev,
+    .ant-pagination-next,
+    .ant-pagination-jump-next {
+      @extend .cardBorder;
+      @extend .softTransition;
+    }
+    .ant-pagination-next,
+    .ant-pagination-jump-next {
+      color: var(--white);
+      background-color: var(--black);
+    }
+
+    .ant-pagination-item a {
+      color: var(--pagination-link-gray);
+    }
+    .ant-pagination-item-active,
+    .ant-pagination-item-active a {
+      color: var(--black);
+      border-color: transparent;
+      background: transparent;
+    }
+    .ant-pagination-item-link,
+    .ant-pagination-item,
+    .ant-pagination-item:hover {
+      @extend .cardBorder;
+      color: var(--pagination-item-color);
+      background-color: transparent;
+      border-color: transparent;
+    }
+    .ant-pagination-disabled .ant-pagination-item-link,
+    .ant-pagination-disabled:hover .ant-pagination-item-link {
+      background-color: var(--pagination-gray);
+      border-color: var(--pagination-gray);
+      color: var(--pagination-gray-color);
+    }
   }
 }
