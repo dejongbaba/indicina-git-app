@@ -9,6 +9,24 @@
 
 .user__card {
   @extend .card;
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    p:first-of-type {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-right: 1rem;
+      color: var(--black);
+    }
+  }
+
+  &__title {
+    letter-spacing: 0.5;
+  }
+  &__desc {
+    font-size: 0.8rem;
+  }
 }
 
 .repo__card {

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { Empty, Pagination } from "antd";
+import { Empty, Pagination, Skeleton } from "antd";
 import "./cardList.scss";
+import { CardNodeFormatProps } from "../../pages/home/Home";
 
 type CardListProps = {
   data: Array<any>;
@@ -8,11 +9,17 @@ type CardListProps = {
   currentPage: number;
   totalPages: number;
   paginated: boolean;
-  view: (data: { [key: string]: any }) => ReactNode;
+  loading: boolean;
+  view: (data: CardNodeFormatProps) => ReactNode;
 };
 
 function CardList(props: CardListProps) {
-  const { title, data, currentPage, totalPages, paginated, view } = props;
+  const { title, data, currentPage, totalPages, paginated, loading, view } =
+    props;
+
+  if (loading) {
+    return <Skeleton />;
+  }
   return (
     <div className="card__list">
       <h4 className="card__list__title">{title}</h4>

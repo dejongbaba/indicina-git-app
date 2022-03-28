@@ -1,131 +1,147 @@
+import { useLazyQuery } from "@apollo/client";
 import moment from "moment";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ChangeEvent, useState } from "react";
 import Card from "../../components/card/Card";
 import CardList from "../../components/cardList/CardList";
 import ListSection from "../../components/ListSection/ListSection";
 import NavigationBar from "../../components/navigationBar/NavigationBar";
 import SideMenu from "../../components/sideMenu/SideMenu";
-import { getUsers } from "../../features/users/usersSlice";
 import useDebounce from "../../hooks/useDebounce";
-import ApiService from "../../services/apiService/ApiService";
-import RepoService from "../../services/repoService/RepoService";
-import { formatNumber, getToken } from "../../utils/utils";
+import { SEARCH_REPOSITORIES, SEARCH_USERS } from "../../queries/queries";
+import { CONSTANTS, formatNumber } from "../../utils/utils";
+import Search from "../../components/search/Search";
+import { useNavigate } from "react-router";
 
-/* 
-TODO 
- work work on test for the pages
- work on dispatching the api's with slices for the features 
- work on ui modifications
-
-
-
-*/
-type HomeProps = {};
-type DataProps = { search?: { [key: string]: any }; repositoryCount: number };
+export type HomeProps = {};
+export type CardNodeFormatProps = { node: CardFormatProps };
+export type CardFormatProps = {
+  bio?: string;
+  description?: string;
+  email?: string;
+  licenseInfo?: { [key: string]: string };
+  name: string;
+  type: string;
+  updatedAt: string;
+};
 function Home(props: HomeProps) {
-  const [search, setSearch] = useState("");
-  const [data, setData]: any = useState([]);
-  const dispatch = useDispatch();
-  const { users } = useSelector((state: any) => state.users);
-  console.log("====================================");
-  console.log("users", users);
-  console.log("====================================");
-  const debouncedSearch = useDebounce(search, 1000);
-  useEffect(() => {
-    ApiService.init(process.env.REACT_APP_GRAPH_QL_URI ?? "");
-    ApiService.setHeader(getToken() ?? "");
-    if (debouncedSearch) {
-      dispatch(RepoService.search(debouncedSearch));
-      // dispatch(RepoService.search(debouncedSearch));
-      // .then((res: any) => {
-      //   console.log("res in repo", res);
-      //   setData(res?.user?.repositories);
-      // })
-      // .catch((e: Error) => {
-      //   console.error(e);
-      // });
-    } else {
-      dispatch(getUsers());
-      // dispatch(RepoService.getAllRepositories());
-      // .then((res: any) => {
-      //   console.log("res in repo", res);
-      //   setData(res?.user?.repositories);
-      // })
-      // .catch((e: Error) => {
-      //   console.error(e);
-      // });
-    }
-  }, [debouncedSearch]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showCenteredSearch, setShowCenteredSearch] = useState(true);
+  const [cardType, setCardType] = useState(CONSTANTS.CARD_TYPE_REPO);
+  const debouncedSearch = useDebounce(searchTerm, 1000);
+  const navigator = useNavigate();
 
-  const cardFormat = (data: any) => {
+  const [search, { loading: searchLoading, data: searchData }] = useLazyQuery(
+    SEARCH_REPOSITORIES,
+    {
+      variables: { searchTerm: debouncedSearch },
+    }
+  );
+
+  const [searchUsers, { loading: usersLoading, data: usersData }] =
+    useLazyQuery(SEARCH_USERS, {
+      variables: { searchTerm: debouncedSearch },
+    });
+
+  const searchRepoResults = searchData?.search?.edges ?? [];
+  const searchUserResults = usersData?.search?.edges ?? [];
+
+  const cardFormat = (data: CardNodeFormatProps) => {
+    const { description, bio, email, licenseInfo, name, updatedAt } = data.node;
     return (
       <Card
-        title={data?.url}
-        type={"repo"}
-        description={`${data?.description} | ${moment(
-          data?.updatedAt
+        title={description || bio || ""}
+        type={cardType}
+        description={`${licenseInfo?.name || email} | ${moment(
+          updatedAt
         ).fromNow()}`}
-        header={data?.name}
+        header={name}
       />
     );
   };
 
-  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
-  const Repos = [
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-    {
-      title: "Telegram for Android source",
-      description: "17.2k Stars | Java | GPL-2.0 License | Updated 4 hours ago",
-      header: "DrKLO/Telegram",
-    },
-  ];
+  const onClickSearch = (show = false) => {
+    setShowCenteredSearch(show);
+    if (cardType === CONSTANTS.CARD_TYPE_REPO) {
+      search();
+    } else {
+      searchUsers();
+    }
+  };
+
+  const onGetRepos = () => {
+    setCardType(CONSTANTS.CARD_TYPE_REPO);
+    search();
+  };
+
+  const onLogOut = () => {
+    sessionStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+    navigator("/");
+  };
+
+  const onSearchUsers = () => {
+    setCardType(CONSTANTS.CARD_TYPE_USER);
+    searchUsers();
+  };
+
   return (
     <div>
-      <NavigationBar onSearch={onSearch} />
-      <ListSection>
-        <SideMenu />
-        <CardList
-          paginated={!!data?.length}
-          currentPage={1}
-          totalPages={39}
-          view={cardFormat}
-          data={data?.nodes}
-          title={`${formatNumber(data?.totalCount || "")} repository results`}
+      {showCenteredSearch ? (
+        <Search
+          searchTerm={searchTerm}
+          onChangeSearch={onChangeSearch}
+          onSearchButton={() => onClickSearch(false)}
         />
-      </ListSection>
+      ) : (
+        <>
+          <NavigationBar
+            onSearchButton={() => onClickSearch(false)}
+            searchTerm={searchTerm}
+            onLogout={onLogOut}
+            onSearch={onChangeSearch}
+          />
+          <ListSection>
+            <SideMenu
+              onClickRepos={onGetRepos}
+              onClickUsers={onSearchUsers}
+              userCount={usersData?.search?.userCount}
+              repoCount={searchData?.search?.repositoryCount}
+            />
+            <CardList
+              loading={
+                cardType === CONSTANTS.CARD_TYPE_REPO
+                  ? searchLoading
+                  : usersLoading
+              }
+              paginated={
+                cardType === CONSTANTS.CARD_TYPE_REPO
+                  ? !!searchRepoResults?.length
+                  : !!searchUserResults?.length
+              }
+              currentPage={1}
+              totalPages={39}
+              view={cardFormat}
+              data={
+                cardType === CONSTANTS.CARD_TYPE_REPO
+                  ? searchRepoResults
+                  : searchUserResults
+              }
+              title={
+                cardType === CONSTANTS.CARD_TYPE_REPO
+                  ? `${formatNumber(
+                      searchData?.search?.repositoryCount || ""
+                    )} repository results`
+                  : `${formatNumber(
+                      usersData?.search?.userCount || ""
+                    )} users results`
+              }
+            />
+          </ListSection>
+        </>
+      )}
     </div>
   );
 }

@@ -1,10 +1,11 @@
+import { CONSTANTS } from "../../utils/utils";
 import "./card.scss";
 
 type CardProps = {
   type: string;
 };
 function Card(props: CardProps & RepoCardProps & UserCardProps) {
-  if (props.type === "user") {
+  if (props.type === CONSTANTS.CARD_TYPE_USER) {
     return <UserCard {...props} />;
   }
   return <RepoCard {...props} />;

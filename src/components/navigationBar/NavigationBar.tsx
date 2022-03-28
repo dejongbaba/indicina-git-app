@@ -8,13 +8,30 @@ import "./navigationBar.scss";
 
 type NagivationProps = {
   onSearch: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSearchButton?: () => void;
+  onLogout: () => void;
+  searchTerm: string;
 };
-function NavigationBar({ onSearch }: NagivationProps) {
+function NavigationBar({
+  onSearch,
+  onLogout,
+  searchTerm,
+  onSearchButton,
+}: NagivationProps) {
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={onLogout} danger>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <div className="navigation__bar">
       <img src={logo} alt="GIT LOGO" />
       <Input
+        value={searchTerm}
         onChange={onSearch}
+        onPressEnter={onSearchButton}
         className="page__search__input"
         placeholder="Search"
         size="large"
@@ -34,11 +51,5 @@ function NavigationBar({ onSearch }: NagivationProps) {
     </div>
   );
 }
-
-const menu = (
-  <Menu>
-    <Menu.Item danger>Logout</Menu.Item>
-  </Menu>
-);
 
 export default NavigationBar;

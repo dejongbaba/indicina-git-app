@@ -1,3 +1,9 @@
+export enum CONSTANTS {
+  ACCESS_TOKEN = "access_token",
+  CARD_TYPE_REPO = "repo",
+  CARD_TYPE_USER = "user",
+}
+
 export const getToken = () => sessionStorage.getItem("access_token");
 
 export function formatNumber(num: string | number) {

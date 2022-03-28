@@ -1,23 +1,31 @@
-import { Provider } from "react-redux";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./app.scss";
 import Home from "./pages/home/Home";
 import Landing from "./pages/landing/Landing";
-import Search from "./pages/search/Search";
-import { store } from "./store/store";
+import { CONSTANTS } from "./utils/utils";
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: process.env.REACT_APP_GRAPH_QL_URI,
+  headers: {
+    Authorization:
+      `Bearer ${sessionStorage.getItem(CONSTANTS.ACCESS_TOKEN)}` ?? "",
+  },
+  // link: authLink,
+});
 
 function App() {
   return (
     <div className="App">
-      <Provider store={store}>
+      <ApolloProvider client={client}>
         <Router>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/search" element={<Search />} />
             <Route path="/home" element={<Home />} />
           </Routes>
         </Router>
-      </Provider>
+      </ApolloProvider>
     </div>
   );
 }

@@ -1,16 +1,29 @@
+import { formatNumber } from "../../utils/utils";
 import "./sideMenu.scss";
 
-export default function SideMenu() {
+type SideMenuProps = {
+  repoCount: string;
+  userCount: string;
+  onClickUsers: () => void;
+  onClickRepos: () => void;
+};
+
+export default function SideMenu({
+  repoCount,
+  userCount,
+  onClickUsers,
+  onClickRepos,
+}: SideMenuProps) {
   return (
     <nav className="side__menu">
       <ul>
-        <li className="side__menu__item">
+        <li onClick={onClickUsers} className="side__menu__item">
           <span>User</span>
-          <span>12003</span>
+          <span>{formatNumber(userCount)}</span>
         </li>
-        <li className="side__menu__item">
+        <li onClick={onClickRepos} className="side__menu__item">
           <span>Repositories</span>
-          <span>34000</span>
+          <span>{formatNumber(repoCount)}</span>
         </li>
       </ul>
     </nav>
