@@ -26,7 +26,7 @@ function Landing() {
       <LoginGithub
         className="indicina__button"
         buttonText="Login to Github"
-        redirectUri=""
+        redirectUri={process.env.REACT_APP_REDIRECT_URI}
         clientId={process.env.REACT_APP_CLIENT_ID || ""}
         onSuccess={onSuccess}
         onFailure={onFailure}
