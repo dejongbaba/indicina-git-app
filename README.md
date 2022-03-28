@@ -6,9 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-## View online version
+Before you run the app in the development mode. run the command below
 
-[demo site](https://indicina-git.netlify.app/)
+### `npm install`
 
 ### `npm start`
 
@@ -32,3 +32,7 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## View online version and demo
+
+[demo site](https://indicina-git.netlify.app/)
