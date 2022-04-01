@@ -1,9 +1,14 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders learn react link", () => {
+test("Renders app properly", async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  const buttonElement = screen.getByText(/login to github/i);
+  expect(buttonElement).toBeInTheDocument();
+
+  fireEvent.click(buttonElement);
+
+  await expect(screen.getAllByText(/search/i)).toBeInTheDocument();
 });

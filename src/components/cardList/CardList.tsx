@@ -6,6 +6,7 @@ import { CardNodeFormatProps } from "../../pages/home/Home";
 type CardListProps = {
   data: Array<any>;
   title: string;
+  errorMessage: string;
   currentPage: number;
   totalPages: number;
   paginated: boolean;
@@ -14,8 +15,16 @@ type CardListProps = {
 };
 
 function CardList(props: CardListProps) {
-  const { title, data, currentPage, totalPages, paginated, loading, view } =
-    props;
+  const {
+    title,
+    data,
+    errorMessage,
+    currentPage,
+    totalPages,
+    paginated,
+    loading,
+    view,
+  } = props;
 
   if (loading) {
     return <Skeleton />;
@@ -26,7 +35,7 @@ function CardList(props: CardListProps) {
       {data?.length ? (
         data?.map((d) => view(d))
       ) : (
-        <Empty description="No Repositories" />
+        <Empty description={errorMessage} />
       )}
       {data?.length && paginated ? (
         <div className="card__list__pagination__section">

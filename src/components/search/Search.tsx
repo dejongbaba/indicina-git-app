@@ -12,7 +12,7 @@ type SearchProps = {
 };
 function Search({ onChangeSearch, searchTerm, onSearchButton }: SearchProps) {
   return (
-    <div className="page__search">
+    <div className="page__search" data-testid="page-search">
       <div className="page__search__section">
         <img className="page__search__logo" src={logo} alt="GITHUB LOGO" />
         <div className="my-1-5">

@@ -121,6 +121,15 @@ function Home(props: HomeProps) {
                   ? !!searchRepoResults?.length
                   : !!searchUserResults?.length
               }
+              errorMessage={
+                cardType === CONSTANTS.CARD_TYPE_REPO &&
+                !!searchRepoResults?.length
+                  ? "No Repositories"
+                  : cardType === CONSTANTS.CARD_TYPE_USER &&
+                    !!searchUserResults?.length
+                  ? "No Users"
+                  : ""
+              }
               currentPage={1}
               totalPages={39}
               view={cardFormat}

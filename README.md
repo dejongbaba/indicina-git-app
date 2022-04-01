@@ -1,10 +1,8 @@
 # Getting Started with Indicina Git App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project provides an authenticated directory to search through git users and repositories
 
-## Available Scripts
-
-In the project directory, you can run:
+## Steps to run
 
 Before you run the app in the development mode. run the command below
 
